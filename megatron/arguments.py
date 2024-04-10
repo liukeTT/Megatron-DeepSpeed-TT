@@ -835,6 +835,23 @@ def _add_training_args(parser):
                        'uniformly divided recompute unit, '
                        '2) block: the number of individual Transformer layers '
                        'to recompute within each pipeline stage.')
+    
+    # New arguments for et & kineto profiling
+    group.add_argument('--profile', action='store_true',
+                       help='Enable nsys profiling. When using this option, nsys '
+                       'options should be specified in commandline. An example '
+                       'nsys commandline is `nsys profile -s none -t nvtx,cuda '
+                       '-o <path/to/output_file> --force-overwrite true '
+                       '--capture-range=cudaProfilerApi '
+                       '--capture-range-end=stop`.')
+    group.add_argument('--with-stack', action='store_true',
+                       help='Profile with function call stack')
+    group.add_argument('--profile-step-start', type=int, default=10,
+                       help='Global step to start profiling.')
+    group.add_argument('--profile-step-end', type=int, default=12,
+                       help='Global step to stop profiling.')
+    group.add_argument('--profile-trace-path', type=str, default=None,
+                       help='execution and kineto trace path.')
 
     # deprecated
     # HACK: added back arguments because DeepSpeed still relies on the old

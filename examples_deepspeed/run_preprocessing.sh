@@ -1,6 +1,7 @@
-corpus_f="/workspace/datasets/oscar-1GB.jsonl"
-vocab_f="/workspace/datasets/gpt2-vocab.json"
-merge_f="/workspace/datasets/gpt2-merges.txt"
+dataset_dir="/workspace/datasets"
+corpus_f="${dataset_dir}/oscar-1GB.jsonl"
+vocab_f="${dataset_dir}/gpt2-vocab.json"
+merge_f="${dataset_dir}/gpt2-merges.txt"
 output_prefix="oscar-gpt2"
 n_workers=32
 
@@ -16,5 +17,5 @@ python tools/preprocess_data.py \
        --append-eod \
        --workers $n_workers
 
-mv oscar-gpt2_text_document.bin /workspace/datasets/
-mv oscar-gpt2_text_document.idx /workspace/datasets/
+mv oscar-gpt2_text_document.bin ${dataset_dir}/
+mv oscar-gpt2_text_document.idx ${dataset_dir}/
