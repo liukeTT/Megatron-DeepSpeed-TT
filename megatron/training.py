@@ -12,6 +12,7 @@ _TRAIN_START_TIME = time.time()
 import torch
 from collections import OrderedDict
 from torch.nn.parallel.distributed import DistributedDataParallel as torchDDP
+from torch.profiler import _ExperimentalConfig, ExecutionTraceObserver
 
 from megatron import get_args
 from megatron import get_signal_handler
@@ -1188,9 +1189,48 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
     if args.random_ltd:
         assert model[0].random_ltd_enabled()
         args.random_ltd_layer_num = model[0].random_ltd_scheduler.get_random_ltd_layer_num()
-        
+    
+    # ### profiling ###
+    # prof: ET
+    astrasim_path = args.profile_trace_path
+    with_stack = args.with_stack
+    local_rank = torch.distributed.get_rank()
+    et_file = "{}/et/worker_{}.json".format(astrasim_path, local_rank)
+    et = ExecutionTraceObserver()
+    et.register_callback(et_file)
+
+    # prof: kineto
+    def trace_handler(prof):
+        kineto_file = "{}/kineto/worker_{}_step_{}".format(astrasim_path, local_rank, prof.step_num)
+        #torch.profiler.tensorboard_trace_handler('./kineto', worker_name=kineto_file).__call__(prof)
+        prof.export_chrome_trace(kineto_file + ".json")
+    
+    with torch.autograd.profiler.profile(
+        enabled=True,
+        use_cuda=True,
+        use_kineto=True,
+    ) as _:
+        print("Running dummy profiler warmup for CUPTI.")
+    
+    prof = torch.profiler.profile(
+        activities=[
+            torch.profiler.ProfilerActivity.CPU,
+            torch.profiler.ProfilerActivity.CUDA
+        ], 
+        schedule=torch.profiler.schedule(skip_first=1, wait=1, warmup=1, active=1, repeat=1),
+        on_trace_ready=trace_handler,
+        profile_memory=True,
+        with_stack=with_stack,
+        record_shapes=True
+    )
+
     while iteration < args.train_iters and (args.train_tokens is None or \
         args.consumed_train_tokens < args.train_tokens):
+        # prof: start step
+        if args.profile and iteration == args.profile_step_start:
+            print("[ET] rank {} start at iteration {}".format(local_rank, iteration))
+            et.start()
+
         update_num_microbatches(args.consumed_train_samples)
         if args.deepspeed:
             # inform deepspeed of any batch size changes
@@ -1214,6 +1254,14 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
                        optimizer,
                        opt_param_scheduler,
                        config)
+        # prof: stop step
+        if args.profile and iteration == args.profile_step_end:
+            print("[ET] rank {} end at iteration {}".format(local_rank, iteration))
+            #torch.cuda.cudart().cudaProfilerStop()
+            et.stop()
+            et.unregister_callback()
+        prof.step()
+        
         iteration += 1
         args.iteration = iteration
         new_samples = mpu.get_data_parallel_world_size() * \

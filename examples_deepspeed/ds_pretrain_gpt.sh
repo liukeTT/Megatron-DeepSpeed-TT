@@ -87,7 +87,7 @@ MIN_LR=6.0e-5
 ## For MoE model, we found sometimes training a bit more to 330B tokens helps
 # TRAIN_TOKENS=300000000000
 # TRAIN_TOKENS=330000000000
-TRAIN_TOKENS=4096
+TRAIN_TOKENS=300000
 
 ## TRAIN_SAMPLES is another termination condition and also affect the number of 
 ## data samples to be indexed. Since we want to reach the TRAIN_TOKENS
@@ -319,12 +319,12 @@ megatron_options="${megatron_options} \
 fi
 
 
-#ZERO_STAGE=0
-#OFFLOAD="false"
+ZERO_STAGE=0
+OFFLOAD="false"
 
-ZERO_STAGE=2
+#ZERO_STAGE=2
 #OFFLOAD="false"
-OFFLOAD="true"
+#OFFLOAD="true"
 
 #ZERO_STAGE=3
 #OFFLOAD="false"
@@ -351,9 +351,6 @@ sed "s/CONFIG_BATCH_SIZE/${GLOBAL_BATCH_SIZE}/" ${template_json} \
 fi
 
 if [ "${OFFLOAD}" = "true" ]; then
-megatron_options="${megatron_options} \
-        --cpu-optimizer"
-
 OFFLOAD_RATIO=1
 template_json="examples_deepspeed/ds_config_offload_TEMPLATE.json"
 config_json="examples_deepspeed/ds_config_offload_${NAME}.json"
@@ -376,6 +373,11 @@ deepspeed_options=" \
 		    --deepspeed \
 		    --deepspeed_config ${config_json} \
 		    --pipeline-model-parallel-size ${PP_SIZE}"
+
+if [ "${OFFLOAD}" = "true" ]; then
+deepspeed_options="${deepspeed_options} \
+        --cpu-optimizer"
+fi
 
 # Currently MoE is not compatible with pipeline parallel
 if [ $EP_SIZE -gt 1 ]; then

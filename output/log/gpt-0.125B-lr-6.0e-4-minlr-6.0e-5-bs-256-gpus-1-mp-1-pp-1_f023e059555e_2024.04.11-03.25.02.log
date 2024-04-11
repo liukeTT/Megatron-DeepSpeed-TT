@@ -1,0 +1,700 @@
+[2024-04-11 03:25:05,752] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.2
+[93m [WARNING] [0m please install triton==1.0.0 if you want to use sparse attention
+[2024-04-11 03:25:10,201] [WARNING] [runner.py:202:fetch_hostfile] Unable to find hostfile, will proceed with training with local resources only.
+[2024-04-11 03:25:10,201] [INFO] [runner.py:568:main] cmd = /usr/bin/python -u -m deepspeed.launcher.launch --world_info=eyJsb2NhbGhvc3QiOiBbMF19 --master_addr=127.0.0.1 --master_port=29500 --enable_each_rank_log=None pretrain_gpt.py --override-opt_param-scheduler --adam-beta1 0.9 --adam-beta2 0.95 --tensor-model-parallel-size 1 --moe-expert-parallel-size 1 --num-experts 1 --moe-loss-coeff 0.01 --moe-train-capacity-factor 1.0 --moe-eval-capacity-factor 1.0 --moe-min-capacity 4 --init-method-std 0.014 --lr-decay-tokens 2048 --lr-warmup-tokens 2048 --micro-batch-size 8 --exit-duration-in-mins 10 --rampup-batch-size 32 32 1953125 --global-batch-size 256 --num-layers 12 --hidden-size 768 --num-attention-heads 12 --seq-length 1024 --max-position-embeddings 1024 --train-tokens 300000 --train-samples 292 --lr 6.0e-4 --min-lr 6.0e-5 --lr-decay-style cosine --split 98,2,0 --log-interval 1 --eval-interval 100 --eval-iters 10 --save-interval 1000 --weight-decay 0.1 --clip-grad 1.0 --hysteresis 2 --num-workers 0 --fp16 --tensorboard-queue-size 1 --log-timers-to-tensorboard --timing-log-level 1 --no-pipeline-parallel --log-batch-size-to-tensorboard --log-validation-ppl-to-tensorboard --tensorboard-dir /workspace/Megatron-DeepSpeed/output/tensorboard/gpt-0.125B-lr-6.0e-4-minlr-6.0e-5-bs-256-gpus-1-mp-1-pp-1_f023e059555e_2024.04.11-03.25.02 --profile --profile-step-start 3 --profile-step-end 3 --profile-trace-path /workspace/Megatron-DeepSpeed/output --vocab-file /workspace/datasets/gpt2-vocab.json --merge-file /workspace/datasets/gpt2-merges.txt --data-path /workspace/datasets/oscar-gpt2_text_document --data-impl mmap --deepspeed --deepspeed_config examples_deepspeed/ds_config_gpt-0.125B-lr-6.0e-4-minlr-6.0e-5-bs-256-gpus-1-mp-1-pp-1.json --pipeline-model-parallel-size 1
+[2024-04-11 03:25:11,332] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.2
+[93m [WARNING] [0m please install triton==1.0.0 if you want to use sparse attention
+[2024-04-11 03:25:15,810] [INFO] [launch.py:138:main] 0 NCCL_VERSION=2.19.4
+[2024-04-11 03:25:15,810] [INFO] [launch.py:145:main] WORLD INFO DICT: {'localhost': [0]}
+[2024-04-11 03:25:15,810] [INFO] [launch.py:151:main] nnodes=1, num_local_procs=1, node_rank=0
+[2024-04-11 03:25:15,810] [INFO] [launch.py:162:main] global_rank_mapping=defaultdict(<class 'list'>, {'localhost': [0]})
+[2024-04-11 03:25:15,810] [INFO] [launch.py:163:main] dist_world_size=1
+[2024-04-11 03:25:15,810] [INFO] [launch.py:165:main] Setting CUDA_VISIBLE_DEVICES=0
+[2024-04-11 03:25:15,810] [INFO] [launch.py:253:main] process 14869 spawned with command: ['/usr/bin/python', '-u', 'pretrain_gpt.py', '--local_rank=0', '--override-opt_param-scheduler', '--adam-beta1', '0.9', '--adam-beta2', '0.95', '--tensor-model-parallel-size', '1', '--moe-expert-parallel-size', '1', '--num-experts', '1', '--moe-loss-coeff', '0.01', '--moe-train-capacity-factor', '1.0', '--moe-eval-capacity-factor', '1.0', '--moe-min-capacity', '4', '--init-method-std', '0.014', '--lr-decay-tokens', '2048', '--lr-warmup-tokens', '2048', '--micro-batch-size', '8', '--exit-duration-in-mins', '10', '--rampup-batch-size', '32', '32', '1953125', '--global-batch-size', '256', '--num-layers', '12', '--hidden-size', '768', '--num-attention-heads', '12', '--seq-length', '1024', '--max-position-embeddings', '1024', '--train-tokens', '300000', '--train-samples', '292', '--lr', '6.0e-4', '--min-lr', '6.0e-5', '--lr-decay-style', 'cosine', '--split', '98,2,0', '--log-interval', '1', '--eval-interval', '100', '--eval-iters', '10', '--save-interval', '1000', '--weight-decay', '0.1', '--clip-grad', '1.0', '--hysteresis', '2', '--num-workers', '0', '--fp16', '--tensorboard-queue-size', '1', '--log-timers-to-tensorboard', '--timing-log-level', '1', '--no-pipeline-parallel', '--log-batch-size-to-tensorboard', '--log-validation-ppl-to-tensorboard', '--tensorboard-dir', '/workspace/Megatron-DeepSpeed/output/tensorboard/gpt-0.125B-lr-6.0e-4-minlr-6.0e-5-bs-256-gpus-1-mp-1-pp-1_f023e059555e_2024.04.11-03.25.02', '--profile', '--profile-step-start', '3', '--profile-step-end', '3', '--profile-trace-path', '/workspace/Megatron-DeepSpeed/output', '--vocab-file', '/workspace/datasets/gpt2-vocab.json', '--merge-file', '/workspace/datasets/gpt2-merges.txt', '--data-path', '/workspace/datasets/oscar-gpt2_text_document', '--data-impl', 'mmap', '--deepspeed', '--deepspeed_config', 'examples_deepspeed/ds_config_gpt-0.125B-lr-6.0e-4-minlr-6.0e-5-bs-256-gpus-1-mp-1-pp-1.json', '--pipeline-model-parallel-size', '1']
+[2024-04-11 03:25:17,040] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.2
+[93m [WARNING] [0m please install triton==1.0.0 if you want to use sparse attention
+--------------------------------------------------
+DeepSpeed C++/CUDA extension op report
+--------------------------------------------------
+NOTE: Ops not installed will be just-in-time (JIT) compiled at
+      runtime if needed. Op compatibility means that your system
+      meet the required dependencies to JIT install the op.
+--------------------------------------------------
+JIT compiled ops requires ninja
+ninja .................. [92m[OKAY][0m
+--------------------------------------------------
+op name ................ installed .. compatible
+--------------------------------------------------
+async_io ............... [93m[NO][0m ....... [92m[OKAY][0m
+fused_adam ............. [93m[NO][0m ....... [92m[OKAY][0m
+cpu_adam ............... [93m[NO][0m ....... [92m[OKAY][0m
+cpu_adagrad ............ [93m[NO][0m ....... [92m[OKAY][0m
+cpu_lion ............... [93m[NO][0m ....... [92m[OKAY][0m
+[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+evoformer_attn ......... [93m[NO][0m ....... [93m[NO][0m
+fp_quantizer ........... [93m[NO][0m ....... [92m[OKAY][0m
+fused_lamb ............. [93m[NO][0m ....... [92m[OKAY][0m
+fused_lion ............. [93m[NO][0m ....... [92m[OKAY][0m
+inference_core_ops ..... [93m[NO][0m ....... [92m[OKAY][0m
+cutlass_ops ............ [93m[NO][0m ....... [92m[OKAY][0m
+transformer_inference .. [93m[NO][0m ....... [92m[OKAY][0m
+quantizer .............. [93m[NO][0m ....... [92m[OKAY][0m
+ragged_device_ops ...... [93m[NO][0m ....... [92m[OKAY][0m
+ragged_ops ............. [93m[NO][0m ....... [92m[OKAY][0m
+random_ltd ............. [93m[NO][0m ....... [92m[OKAY][0m
+[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.2
+[93m [WARNING] [0m please install triton==1.0.0 if you want to use sparse attention
+sparse_attn ............ [93m[NO][0m ....... [93m[NO][0m
+spatial_inference ...... [93m[NO][0m ....... [92m[OKAY][0m
+transformer ............ [93m[NO][0m ....... [92m[OKAY][0m
+stochastic_transformer . [93m[NO][0m ....... [92m[OKAY][0m
+--------------------------------------------------
+DeepSpeed general environment info:
+torch install path ............... ['/usr/local/lib/python3.10/dist-packages/torch']
+torch version .................... 2.2.0a0+81ea7a4
+deepspeed install path ........... ['/usr/local/lib/python3.10/dist-packages/deepspeed']
+deepspeed info ................... 0.14.1+a8b82153, a8b82153, master
+torch cuda version ............... 12.3
+torch hip version ................ None
+nvcc version ..................... 12.3
+deepspeed wheel compiled w. ...... torch 2.2, cuda 12.3
+shared memory (/dev/shm) size .... 239.41 GB
+**** Git info for Megatron: git_hash=ae44c51 git_branch=main ****
+using world size: 1, data-parallel-size: 1, sequence-parallel size: 1, tensor-model-parallel size: 1, pipeline-model-parallel size: 1 
+using torch.float16 for parameters ...
+------------------------ arguments ------------------------
+  accumulate_allreduce_grads_in_fp32 .............. False
+  adam_beta1 ...................................... 0.9
+  adam_beta2 ...................................... 0.95
+  adam_eps ........................................ 1e-08
+  add_bias_linear ................................. True
+  add_position_embedding .......................... True
+  adlr_autoresume ................................. False
+  adlr_autoresume_interval ........................ 1000
+  aml_data_download_path .......................... None
+  apply_layernorm_1p .............................. False
+  apply_query_key_layer_scaling ................... True
+  apply_residual_connection_post_layernorm ........ False
+  async_tensor_model_parallel_allreduce ........... False
+  attention_dropout ............................... 0.1
+  attention_softmax_in_fp32 ....................... False
+  barrier_with_L1_time ............................ True
+  bert_binary_head ................................ True
+  bert_embedder_type .............................. megatron
+  bert_load ....................................... None
+  bf16 ............................................ False
+  bias_dropout_fusion ............................. True
+  bias_gelu_fusion ................................ True
+  biencoder_projection_dim ........................ 0
+  biencoder_shared_query_context_model ............ False
+  block_data_path ................................. None
+  checkpoint_activations .......................... False
+  checkpoint_in_cpu ............................... False
+  checkpoint_num_layers ........................... 1
+  classes_fraction ................................ 1.0
+  clip_grad ....................................... 1.0
+  compression_training ............................ False
+  consumed_train_samples .......................... 0
+  consumed_train_tokens ........................... 0
+  consumed_valid_samples .......................... 0
+  contigious_checkpointing ........................ False
+  cpu_optimizer ................................... False
+  cpu_torch_adam .................................. False
+  create_moe_param_group .......................... False
+  curriculum_learning_legacy ...................... False
+  data_cache_path ................................. None
+  data_efficiency_curriculum_learning ............. False
+  data_impl ....................................... mmap
+  data_parallel_random_init ....................... False
+  data_parallel_size .............................. 1
+  data_path ....................................... ['/workspace/datasets/oscar-gpt2_text_document']
+  data_per_class_fraction ......................... 1.0
+  data_sharding ................................... True
+  dataloader_type ................................. single
+  DDP_impl ........................................ local
+  decoder_num_layers .............................. None
+  decoder_seq_length .............................. None
+  deepscale ....................................... False
+  deepscale_config ................................ None
+  deepspeed ....................................... True
+  deepspeed_activation_checkpointing .............. False
+  deepspeed_config ................................ examples_deepspeed/ds_config_gpt-0.125B-lr-6.0e-4-minlr-6.0e-5-bs-256-gpus-1-mp-1-pp-1.json
+  dino_bottleneck_size ............................ 256
+  dino_freeze_last_layer .......................... 1
+  dino_head_hidden_size ........................... 2048
+  dino_local_crops_number ......................... 10
+  dino_local_img_size ............................. 96
+  dino_norm_last_layer ............................ False
+  dino_teacher_temp ............................... 0.07
+  dino_warmup_teacher_temp ........................ 0.04
+  dino_warmup_teacher_temp_epochs ................. 30
+  distribute_checkpointed_activations ............. False
+  distribute_saved_activations .................... False
+  distributed_backend ............................. nccl
+  distributed_timeout_minutes ..................... 10
+  ds_fused_adam ................................... False
+  ds_inference .................................... False
+  ds_pipeline_enabled ............................. False
+  ds_sequence_parallel_size ....................... 1
+  embedding_path .................................. None
+  embedding_weights_in_fp32 ....................... False
+  empty_unused_memory_level ....................... 0
+  enable_expert_tensor_parallelism ................ False
+  encoder_num_layers .............................. 12
+  encoder_seq_length .............................. 1024
+  end_weight_decay ................................ 0.1
+  eod_mask_loss ................................... False
+  eval_interval ................................... 100
+  eval_iters ...................................... 10
+  evidence_data_path .............................. None
+  exit_duration_in_mins ........................... 10
+  exit_interval ................................... None
+  exit_on_missing_checkpoint ...................... False
+  exit_signal_handler ............................. False
+  expert_interval ................................. 2
+  ffn_hidden_size ................................. 3072
+  finetune ........................................ False
+  force_ds_sequence_parallel ...................... False
+  fp16 ............................................ True
+  fp16_lm_cross_entropy ........................... False
+  fp32_residual_connection ........................ False
+  fp8_amax_compute_algo ........................... most_recent
+  fp8_amax_history_len ............................ 1
+  fp8_e4m3 ........................................ False
+  fp8_hybrid ...................................... False
+  fp8_interval .................................... 1
+  fp8_margin ...................................... 0
+  fp8_wgrad ....................................... True
+  global_batch_size ............................... 256
+  gradient_accumulation_fusion .................... True
+  head_lr_mult .................................... 1.0
+  hidden_dropout .................................. 0.1
+  hidden_size ..................................... 768
+  hidden_size_teacher ............................. None
+  hysteresis ...................................... 2
+  ict_head_size ................................... None
+  ict_load ........................................ None
+  img_h ........................................... 224
+  img_w ........................................... 224
+  indexer_batch_size .............................. 128
+  indexer_log_interval ............................ 1000
+  inference ....................................... False
+  inference_batch_times_seqlen_threshold .......... 512
+  init_method_std ................................. 0.014
+  init_method_xavier_uniform ...................... False
+  initial_loss_scale .............................. 4294967296
+  iter_per_epoch .................................. 1250
+  kd .............................................. False
+  kd_alpha_ce ..................................... 1
+  kd_beta_ce ...................................... 1
+  kd_temp ......................................... 1.0
+  kv_channels ..................................... 64
+  layernorm_epsilon ............................... 1e-05
+  lazy_mpu_init ................................... None
+  load ............................................ None
+  load_tag ........................................ None
+  load_teacher .................................... None
+  local_rank ...................................... 0
+  log_batch_size_to_tensorboard ................... True
+  log_interval .................................... 1
+  log_learning_rate_to_tensorboard ................ True
+  log_loss_scale_to_tensorboard ................... True
+  log_memory_to_tensorboard ....................... False
+  log_num_zeros_in_grad ........................... False
+  log_optimizer_states_to_tensorboard ............. False
+  log_params_norm ................................. False
+  log_timers_to_tensorboard ....................... True
+  log_validation_ppl_to_tensorboard ............... True
+  log_world_size_to_tensorboard ................... False
+  loss_scale ...................................... None
+  loss_scale_window ............................... 1000
+  lr .............................................. 0.0006
+  lr_decay_iters .................................. None
+  lr_decay_samples ................................ None
+  lr_decay_style .................................. cosine
+  lr_decay_tokens ................................. 2048
+  lr_warmup_fraction .............................. None
+  lr_warmup_iters ................................. 0
+  lr_warmup_samples ............................... 0
+  lr_warmup_tokens ................................ 2048
+  make_vocab_size_divisible_by .................... 128
+  mask_factor ..................................... 1.0
+  mask_prob ....................................... 0.15
+  mask_type ....................................... random
+  masked_softmax_fusion ........................... True
+  max_position_embeddings ......................... 1024
+  max_tokens_to_oom ............................... 12000
+  mem_efficient_ln ................................ True
+  memory_centric_tiled_linear ..................... False
+  merge_file ...................................... /workspace/datasets/gpt2-merges.txt
+  micro_batch_size ................................ 8
+  min_loss_scale .................................. 1.0
+  min_lr .......................................... 6e-05
+  mlp_type ........................................ standard
+  mmap_warmup ..................................... False
+  moe_eval_capacity_factor ........................ 1.0
+  moe_expert_parallel_size ........................ 1
+  moe_loss_coeff .................................. 0.01
+  moe_min_capacity ................................ 4
+  moe_token_dropping .............................. True
+  moe_top2_2nd_expert_sampling .................... True
+  moe_train_capacity_factor ....................... 1.0
+  mos ............................................. False
+  no_load_lr_state ................................ False
+  no_load_optim ................................... None
+  no_load_rng ..................................... None
+  no_persist_layer_norm ........................... False
+  no_pipeline_parallel ............................ True
+  no_save_optim ................................... None
+  no_save_rng ..................................... None
+  normalization ................................... layernorm
+  num_attention_heads ............................. 12
+  num_attention_heads_teacher ..................... None
+  num_channels .................................... 3
+  num_classes ..................................... 1000
+  num_experts ..................................... [1]
+  num_experts_switch .............................. None
+  num_experts_teacher ............................. [1]
+  num_key_value_heads ............................. 12
+  num_layers ...................................... 12
+  num_layers_per_virtual_pipeline_stage ........... None
+  num_layers_teacher .............................. None
+  num_workers ..................................... 0
+  onnx_safe ....................................... None
+  openai_gelu ..................................... False
+  optimizer ....................................... adam
+  output_bert_embeddings .......................... False
+  overlap_p2p_comm ................................ False
+  override_opt_param_scheduler .................... True
+  params_dtype .................................... torch.float16
+  partition_activations ........................... False
+  patch_dim ....................................... 16
+  perform_initialization .......................... True
+  pipeline_model_parallel_size .................... 1
+  pipeline_model_parallel_split_rank .............. None
+  profile ......................................... True
+  profile_backward ................................ False
+  profile_step_end ................................ 3
+  profile_step_start .............................. 3
+  profile_trace_path .............................. /workspace/Megatron-DeepSpeed/output
+  query_in_block_prob ............................. 0.1
+  rampup_batch_size ............................... ['32', '32', '1953125']
+  random_ltd ...................................... False
+  rank ............................................ 0
+  recompute_granularity ........................... None
+  recompute_method ................................ None
+  recompute_num_layers ............................ 1
+  remote_device ................................... none
+  repeated_dataloader ............................. False
+  reset_attention_mask ............................ False
+  reset_iteration ................................. False
+  reset_position_ids .............................. False
+  retriever_report_topk_accuracies ................ []
+  retriever_score_scaling ......................... False
+  retriever_seq_length ............................ 256
+  retro_add_retriever ............................. False
+  retro_cyclic_train_iters ........................ None
+  retro_encoder_attention_dropout ................. 0.1
+  retro_encoder_hidden_dropout .................... 0.1
+  retro_encoder_layers ............................ 2
+  retro_num_neighbors ............................. 2
+  retro_num_retrieved_chunks ...................... 2
+  retro_return_doc_ids ............................ False
+  retro_workdir ................................... None
+  return_data_index ............................... False
+  rope_theta ...................................... 10000
+  rotary_percent .................................. 1.0
+  sample_rate ..................................... 1.0
+  save ............................................ None
+  save_interval ................................... 1000
+  scatter_gather_tensors_in_pipeline .............. True
+  scattered_embeddings ............................ False
+  seed ............................................ 1234
+  seq_length ...................................... 1024
+  sequence_parallel ............................... False
+  sgd_momentum .................................... 0.9
+  short_seq_prob .................................. 0.1
+  skip_train ...................................... False
+  split ........................................... 98,2,0
+  split_transformers .............................. False
+  squared_relu .................................... False
+  standalone_embedding_stage ...................... False
+  start_weight_decay .............................. 0.1
+  swiglu .......................................... False
+  swin_backbone_type .............................. tiny
+  synchronize_each_layer .......................... False
+  tensor_model_parallel_size ...................... 1
+  tensorboard_dir ................................. /workspace/Megatron-DeepSpeed/output/tensorboard/gpt-0.125B-lr-6.0e-4-minlr-6.0e-5-bs-256-gpus-1-mp-1-pp-1_f023e059555e_2024.04.11-03.25.02
+  tensorboard_log_interval ........................ 1
+  tensorboard_queue_size .......................... 1
+  test_data_path .................................. None
+  tile_factor ..................................... 1
+  timing_log_level ................................ 1
+  timing_log_option ............................... minmax
+  titles_data_path ................................ None
+  tokenizer_model ................................. None
+  tokenizer_type .................................. GPT2BPETokenizer
+  topk ............................................ 1
+  train_data_exact_num_epochs ..................... None
+  train_data_path ................................. None
+  train_desc_path ................................. None
+  train_doc_idx_path .............................. None
+  train_idx_path .................................. None
+  train_iters ..................................... None
+  train_sample_idx_path ........................... None
+  train_samples ................................... 292
+  train_shuffle_idx_path .......................... None
+  train_tokens .................................... 300000
+  transformer_impl ................................ local
+  transformer_pipeline_model_parallel_size ........ 1
+  universal_checkpoint ............................ False
+  untie_embeddings_and_output_weights ............. False
+  use_checkpoint_args ............................. False
+  use_checkpoint_opt_param_scheduler .............. False
+  use_contiguous_buffers_in_local_ddp ............. True
+  use_cpu_initialization .......................... None
+  use_dataset_only ................................ False
+  use_distributed_optimizer ....................... False
+  use_flash_attn .................................. False
+  use_flash_attn_builder .......................... False
+  use_flash_attn_triton ........................... False
+  use_flash_attn_v1 ............................... False
+  use_flash_attn_v2 ............................... False
+  use_one_sent_docs ............................... False
+  use_pin_memory .................................. False
+  use_ring_exchange_p2p ........................... False
+  use_rotary_position_embeddings .................. False
+  use_tutel ....................................... False
+  valid_data_path ................................. None
+  variable_seq_lengths ............................ False
+  virtual_pipeline_model_parallel_size ............ None
+  vision_backbone_type ............................ vit
+  vision_pretraining .............................. False
+  vision_pretraining_type ......................... classify
+  vocab_extra_ids ................................. 0
+  vocab_file ...................................... /workspace/datasets/gpt2-vocab.json
+  vocab_size ...................................... None
+  weight_decay .................................... 0.1
+  weight_decay_incr_style ......................... constant
+  with_stack ...................................... False
+  world_size ...................................... 1
+  zero_allgather_bucket_size ...................... 0.0
+  zero_contigious_gradients ....................... False
+  zero_reduce_bucket_size ......................... 0.0
+  zero_reduce_scatter ............................. False
+  zero_stage ...................................... 1.0
+-------------------- end of arguments ---------------------
+will use batch size rampup starting from global batch size 32 to global batch size 256 with batch size increments 32 over 1953125 samples.
+> building GPT2BPETokenizer tokenizer ...
+ > padded vocab (size: 50257) with 47 dummy tokens (new size: 50304)
+> setting tensorboard ...
+> initializing torch distributed ...
+[2024-04-11 03:25:22,035] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-04-11 03:25:22,035] [INFO] [comm.py:668:init_distributed] Initializing TorchBackend in DeepSpeed with backend nccl
+> initialized tensor model parallel with size 1
+> initialized pipeline model parallel with size 1
+> setting random seeds to 1234 ...
+> initializing model parallel cuda seeds on global rank 0, model parallel rank 0, and data parallel rank 0 with model parallel seed: 3952 and data parallel seed: 1234
+> compiling dataset index builder ...
+make: Entering directory '/workspace/Megatron-DeepSpeed/megatron/data'
+make: Nothing to be done for 'default'.
+make: Leaving directory '/workspace/Megatron-DeepSpeed/megatron/data'
+>>> done with dataset index builder. Compilation time: 0.022 seconds
+> compiling and loading fused kernels ...
+ninja: no work to do.
+ninja: no work to do.
+ninja: no work to do.
+>>> done with compiling and loading fused kernels. Compilation time: 0.521 seconds
+time to initialize megatron (seconds): 0.926
+[after megatron is initialized] datetime: 2024-04-11 03:25:22 
+building GPT model ...
+[2024-04-11 03:25:22,847] [INFO] [utils.py:772:see_memory_usage] Before Building Model
+[2024-04-11 03:25:22,848] [INFO] [utils.py:773:see_memory_usage] MA 0.0 GB         Max_MA 0.8 GB         CA 0.0 GB         Max_CA 1 GB 
+[2024-04-11 03:25:22,848] [INFO] [utils.py:780:see_memory_usage] CPU Virtual Memory:  used = 44.41 GB, percent = 7.7%
+[2024-04-11 03:25:22,988] [INFO] [utils.py:772:see_memory_usage] After Building Model
+[2024-04-11 03:25:22,989] [INFO] [utils.py:773:see_memory_usage] MA 0.24 GB         Max_MA 0.24 GB         CA 0.25 GB         Max_CA 0 GB 
+[2024-04-11 03:25:22,989] [INFO] [utils.py:780:see_memory_usage] CPU Virtual Memory:  used = 44.66 GB, percent = 7.8%
+ > number of parameters on (tensor, pipeline) model parallel rank (0, 0): 124475904
+setting training iterations to 14980
+> learning rate decay style: cosine
+DeepSpeed is enabled.
+[2024-04-11 03:25:23,005] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed info: version=0.14.1+a8b82153, git-hash=a8b82153, git-branch=master
+[2024-04-11 03:25:23,234] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed Flops Profiler Enabled: False
+[2024-04-11 03:25:23,235] [INFO] [logging.py:96:log_dist] [Rank 0] Using client Optimizer as basic optimizer
+[2024-04-11 03:25:23,235] [INFO] [logging.py:96:log_dist] [Rank 0] Removing param_group that has no 'params' in the basic Optimizer
+[2024-04-11 03:25:23,237] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed Basic Optimizer = FusedAdam
+[2024-04-11 03:25:23,237] [INFO] [logging.py:96:log_dist] [Rank 0] Creating fp16 optimizer with dynamic loss scale
+[2024-04-11 03:25:23,464] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed Final Optimizer = FusedAdam
+[2024-04-11 03:25:23,465] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed using client LR scheduler
+[2024-04-11 03:25:23,465] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed LR Scheduler = <megatron.optimizer_param_scheduler.OptimizerParamScheduler object at 0xfffb30f8ec50>
+[2024-04-11 03:25:23,465] [INFO] [logging.py:96:log_dist] [Rank 0] step=0, skipped=0, lr=[0.0, 0.0], mom=[(0.9, 0.95), (0.9, 0.95)]
+[2024-04-11 03:25:23,465] [INFO] [config.py:996:print] DeepSpeedEngine configuration:
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   activation_checkpointing_config  {
+    "partition_activations": false, 
+    "contiguous_memory_optimization": false, 
+    "cpu_checkpointing": false, 
+    "number_checkpoints": null, 
+    "synchronize_checkpoint_boundary": false, 
+    "profile": false
+}
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   aio_config ................... {'block_size': 1048576, 'queue_depth': 8, 'thread_count': 1, 'single_submit': False, 'overlap_events': True}
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   amp_enabled .................. False
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   amp_params ................... False
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   autotuning_config ............ {
+    "enabled": false, 
+    "start_step": null, 
+    "end_step": null, 
+    "metric_path": null, 
+    "arg_mappings": null, 
+    "metric": "throughput", 
+    "model_info": null, 
+    "results_dir": "autotuning_results", 
+    "exps_dir": "autotuning_exps", 
+    "overwrite": true, 
+    "fast": true, 
+    "start_profile_step": 3, 
+    "end_profile_step": 5, 
+    "tuner_type": "gridsearch", 
+    "tuner_early_stopping": 5, 
+    "tuner_num_trials": 50, 
+    "model_info_path": null, 
+    "mp_size": 1, 
+    "max_train_batch_size": null, 
+    "min_train_batch_size": 1, 
+    "max_train_micro_batch_size_per_gpu": 1.024000e+03, 
+    "min_train_micro_batch_size_per_gpu": 1, 
+    "num_tuning_micro_batch_sizes": 3
+}
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   bfloat16_enabled ............. False
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   bfloat16_immediate_grad_update  False
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   checkpoint_parallel_write_pipeline  False
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   checkpoint_tag_validation_enabled  True
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   checkpoint_tag_validation_fail  False
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   comms_config ................. <deepspeed.comm.config.DeepSpeedCommsConfig object at 0xfffb31025270>
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   communication_data_type ...... None
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   compile_config ............... enabled=False backend='inductor' kwargs={}
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   compression_config ........... {'weight_quantization': {'shared_parameters': {'enabled': False, 'quantizer_kernel': False, 'schedule_offset': 0, 'quantize_groups': 1, 'quantize_verbose': False, 'quantization_type': 'symmetric', 'quantize_weight_in_forward': False, 'rounding': 'nearest', 'fp16_mixed_quantize': False, 'quantize_change_ratio': 0.001}, 'different_groups': {}}, 'activation_quantization': {'shared_parameters': {'enabled': False, 'quantization_type': 'symmetric', 'range_calibration': 'dynamic', 'schedule_offset': 1000}, 'different_groups': {}}, 'sparse_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'row_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'head_pruning': {'shared_parameters': {'enabled': False, 'method': 'topk', 'schedule_offset': 1000}, 'different_groups': {}}, 'channel_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'layer_reduction': {'enabled': False}}
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   curriculum_enabled_legacy .... False
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   curriculum_params_legacy ..... False
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   data_efficiency_config ....... {'enabled': False, 'seed': 1234, 'data_sampling': {'enabled': False, 'num_epochs': 1000, 'num_workers': 0, 'curriculum_learning': {'enabled': False}}, 'data_routing': {'enabled': False, 'random_ltd': {'enabled': False, 'layer_token_lr_schedule': {'enabled': False}}}}
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   data_efficiency_enabled ...... False
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   dataloader_drop_last ......... False
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   disable_allgather ............ False
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   dump_state ................... False
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   dynamic_loss_scale_args ...... {'init_scale': 2048, 'scale_window': 500, 'delayed_shift': 2, 'consecutive_hysteresis': False, 'min_scale': 1}
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   eigenvalue_enabled ........... False
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   eigenvalue_gas_boundary_resolution  1
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   eigenvalue_layer_name ........ bert.encoder.layer
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   eigenvalue_layer_num ......... 0
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   eigenvalue_max_iter .......... 100
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   eigenvalue_stability ......... 1e-06
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   eigenvalue_tol ............... 0.01
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   eigenvalue_verbose ........... False
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   elasticity_enabled ........... False
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   flops_profiler_config ........ {
+    "enabled": false, 
+    "recompute_fwd_factor": 0.0, 
+    "profile_step": 1, 
+    "module_depth": -1, 
+    "top_modules": 1, 
+    "detailed": true, 
+    "output_file": null
+}
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   fp16_auto_cast ............... False
+[2024-04-11 03:25:23,466] [INFO] [config.py:1000:print]   fp16_enabled ................. True
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   fp16_master_weights_and_gradients  False
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   global_rank .................. 0
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   grad_accum_dtype ............. None
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   gradient_accumulation_steps .. 32
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   gradient_clipping ............ 1.0
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   gradient_predivide_factor .... 1.0
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   graph_harvesting ............. False
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   hybrid_engine ................ enabled=False max_out_tokens=512 inference_tp_size=1 release_inference_cache=False pin_parameters=True tp_gather_partition_size=8
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   initial_dynamic_scale ........ 2048
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   load_universal_checkpoint .... False
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   loss_scale ................... 0
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   memory_breakdown ............. False
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   mics_hierarchial_params_gather  False
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   mics_shard_size .............. -1
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   monitor_config ............... tensorboard=TensorBoardConfig(enabled=False, output_path='', job_name='DeepSpeedJobName') wandb=WandbConfig(enabled=False, group=None, team=None, project='deepspeed') csv_monitor=CSVConfig(enabled=False, output_path='', job_name='DeepSpeedJobName') enabled=False
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   nebula_config ................ {
+    "enabled": false, 
+    "persistent_storage_path": null, 
+    "persistent_time_interval": 100, 
+    "num_of_version_in_retention": 2, 
+    "enable_nebula_load": true, 
+    "load_path": null
+}
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   optimizer_legacy_fusion ...... False
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   optimizer_name ............... None
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   optimizer_params ............. None
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   pipeline ..................... {'stages': 'auto', 'partition': 'best', 'seed_layers': False, 'activation_checkpoint_interval': 0, 'pipe_partitioned': True, 'grad_partitioned': True}
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   pld_enabled .................. False
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   pld_params ................... False
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   prescale_gradients ........... False
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   scheduler_name ............... None
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   scheduler_params ............. None
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   seq_parallel_communication_data_type  torch.float32
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   sparse_attention ............. None
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   sparse_gradients_enabled ..... False
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   steps_per_print .............. 1
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   train_batch_size ............. 256
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   train_micro_batch_size_per_gpu  8
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   use_data_before_expert_parallel_  False
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   use_node_local_storage ....... False
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   wall_clock_breakdown ......... False
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   weight_quantization_config ... None
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   world_size ................... 1
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   zero_allow_untested_optimizer  False
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   zero_config .................. stage=0 contiguous_gradients=True reduce_scatter=True reduce_bucket_size=500,000,000 use_multi_rank_bucket_allreduce=True allgather_partitions=True allgather_bucket_size=500,000,000 overlap_comm=False load_from_fp32_weights=True elastic_checkpoint=False offload_param=None offload_optimizer=None sub_group_size=1,000,000,000 cpu_offload_param=None cpu_offload_use_pin_memory=None cpu_offload=None prefetch_bucket_size=50,000,000 param_persistence_threshold=100,000 model_persistence_threshold=sys.maxsize max_live_parameters=1,000,000,000 max_reuse_distance=1,000,000,000 gather_16bit_weights_on_model_save=False stage3_gather_fp16_weights_on_model_save=False ignore_unused_parameters=True legacy_stage1=False round_robin_gradients=False zero_hpz_partition_size=1 zero_quantized_weights=False zero_quantized_nontrainable_weights=False zero_quantized_gradients=False mics_shard_size=-1 mics_hierarchical_params_gather=False memory_efficient_linear=True pipeline_loading_checkpoint=False override_module_apply=True
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   zero_enabled ................. False
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   zero_force_ds_cpu_optimizer .. True
+[2024-04-11 03:25:23,467] [INFO] [config.py:1000:print]   zero_optimization_stage ...... 0
+[2024-04-11 03:25:23,467] [INFO] [config.py:986:print_user_config]   json = {
+    "train_batch_size": 256, 
+    "train_micro_batch_size_per_gpu": 8, 
+    "steps_per_print": 1, 
+    "zero_optimization": {
+        "stage": 0
+    }, 
+    "gradient_clipping": 1.0, 
+    "prescale_gradients": false, 
+    "fp16": {
+        "enabled": true, 
+        "loss_scale": 0, 
+        "loss_scale_window": 500, 
+        "hysteresis": 2, 
+        "min_loss_scale": 1, 
+        "initial_scale_power": 11
+    }, 
+    "bf16": {
+        "enabled": false
+    }, 
+    "wall_clock_breakdown": false
+}
+[after model, optimizer, and learning rate scheduler are built] datetime: 2024-04-11 03:25:23 
+> building train, validation, and test datasets ...
+ > datasets target sizes (minimum size):
+    train:      292
+    validation: 384000
+    test:       2560
+> building train, validation, and test datasets for GPT ...
+Single data path provided for train, valid & test
+ > building dataset index ...
+    reading sizes...
+    reading pointers...
+    reading document index...
+    creating numpy buffer of mmap...
+    creating memory view of numpy buffer...
+ > finished creating indexed dataset in 0.000246 seconds
+    number of documents: 79000
+ > dataset split:
+    train:
+     document indices in [0, 77420) total of 77420 documents
+    validation:
+     document indices in [77420, 79000) total of 1580 documents
+    test:
+     document indices in [79000, 79000) total of 0 documents
+ > loading doc-idx mapping from /workspace/datasets/index-cache/b54a057ff379140999fdf20896a25248_doc_idx.npy
+ > loading sample-idx mapping from /workspace/datasets/index-cache/b54a057ff379140999fdf20896a25248_sample_idx.npy
+ > loading shuffle-idx mapping from /workspace/datasets/index-cache/b54a057ff379140999fdf20896a25248_shuffle_idx.npy
+    loaded indexed file in 0.001 seconds
+    total number of samples: 223781
+    total number of epochs: 1
+ > loading doc-idx mapping from /workspace/datasets/index-cache/a909d2891cc29b4d656671d602f8fe1c_doc_idx.npy
+ > loading sample-idx mapping from /workspace/datasets/index-cache/a909d2891cc29b4d656671d602f8fe1c_sample_idx.npy
+ > loading shuffle-idx mapping from /workspace/datasets/index-cache/a909d2891cc29b4d656671d602f8fe1c_shuffle_idx.npy
+    loaded indexed file in 0.000 seconds
+    total number of samples: 384202
+    total number of epochs: 77
+> finished creating GPT datasets ...
+[after dataloaders are built] datetime: 2024-04-11 03:25:23 
+done with setup ...
+(min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (713.31, 713.31)
+    train/valid/test-data-iterators-setup ..........: (387.03, 387.03)
+training ...
+[before the start of training step] datetime: 2024-04-11 03:25:23 
+Running dummy profiler warmup for CUPTI.
+[2024-04-11 03:25:25,615] [INFO] [logging.py:96:log_dist] [Rank 0] step=1, skipped=0, lr=[0.0, 0.0], mom=[(0.9, 0.95), (0.9, 0.95)]
+ iteration        1/   14980 | consumed samples:           32 | consumed tokens:        32768 | elapsed time per iteration (ms): 1704.8 | learning rate: 0.000E+00 | global batch size:    32 | lm loss: 1.089657E+01 | loss scale: 2048.0 | actual seqlen:  1024 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 18.770 | tokens per gpu per second (tgs): 19220.866 | TFLOPs: 15.31 |
+(min, max) time across ranks (ms):
+    forward-backward ...............................: (1477.40, 1477.40)
+    optimizer ......................................: (211.06, 211.06)
+[2024-04-11 03:25:25,908] [INFO] [logging.py:96:log_dist] [Rank 0] step=2, skipped=0, lr=[6e-05, 6e-05], mom=[(0.9, 0.95), (0.9, 0.95)]
+ iteration        2/   14980 | consumed samples:           64 | consumed tokens:        65536 | elapsed time per iteration (ms): 293.5 | learning rate: 6.000E-05 | global batch size:    32 | lm loss: 1.089840E+01 | loss scale: 2048.0 | actual seqlen:  1024 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 109.046 | tokens per gpu per second (tgs): 111663.273 | TFLOPs: 88.96 |
+[Rank 0] (after 2 iterations) memory (MB) | allocated: 1918.748046875 | max allocated: 14037.03466796875 | reserved: 15788.0 | max reserved: 15788.0
+(min, max) time across ranks (ms):
+    forward-backward ...............................: (274.77, 274.77)
+    optimizer ......................................: (10.49, 10.49)
+[2024-04-11 03:25:26,216] [INFO] [logging.py:96:log_dist] [Rank 0] step=3, skipped=0, lr=[6e-05, 6e-05], mom=[(0.9, 0.95), (0.9, 0.95)]
+[2024-04-11 03:25:26,217] [INFO] [timer.py:260:stop] epoch=0/micro_step=3/global_step=3, RunningAvgSamplesPerSec=3074.88845551365, CurrSamplesPerSec=3074.88845551365, MemAllocated=1.87GB, MaxMemAllocated=13.71GB
+ iteration        3/   14980 | consumed samples:           96 | consumed tokens:        98304 | elapsed time per iteration (ms): 310.2 | learning rate: 6.000E-05 | global batch size:    32 | lm loss: 1.090147E+01 | loss scale: 2048.0 | actual seqlen:  1024 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 103.172 | tokens per gpu per second (tgs): 105647.993 | TFLOPs: 84.17 |
+(min, max) time across ranks (ms):
+    forward-backward ...............................: (287.03, 287.03)
+    optimizer ......................................: (12.19, 12.19)
+[ET] rank 0 start at iteration 3
+[2024-04-11 03:25:26,898] [INFO] [logging.py:96:log_dist] [Rank 0] step=4, skipped=0, lr=[6e-05, 6e-05], mom=[(0.9, 0.95), (0.9, 0.95)]
+[2024-04-11 03:25:26,898] [INFO] [timer.py:260:stop] epoch=0/micro_step=4/global_step=4, RunningAvgSamplesPerSec=1699.1158580343276, CurrSamplesPerSec=1173.8911757696085, MemAllocated=1.87GB, MaxMemAllocated=13.71GB
+[ET] rank 0 end at iteration 3
+ iteration        4/   14980 | consumed samples:          128 | consumed tokens:       131072 | elapsed time per iteration (ms): 3157.0 | learning rate: 6.000E-05 | global batch size:    32 | lm loss: 1.036853E+01 | loss scale: 2048.0 | actual seqlen:  1024 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 10.136 | tokens per gpu per second (tgs): 10379.429 | TFLOPs: 8.27 |
+(min, max) time across ranks (ms):
+    forward-backward ...............................: (612.98, 612.98)
+    optimizer ......................................: (55.23, 55.23)
+[2024-04-11 03:25:29,681] [INFO] [logging.py:96:log_dist] [Rank 0] step=5, skipped=0, lr=[6e-05, 6e-05], mom=[(0.9, 0.95), (0.9, 0.95)]
+[2024-04-11 03:25:29,682] [INFO] [timer.py:260:stop] epoch=0/micro_step=5/global_step=5, RunningAvgSamplesPerSec=2008.0888160211953, CurrSamplesPerSec=3155.8179883729817, MemAllocated=1.87GB, MaxMemAllocated=13.71GB
+ iteration        5/   14980 | consumed samples:          160 | consumed tokens:       163840 | elapsed time per iteration (ms): 304.8 | learning rate: 6.000E-05 | global batch size:    32 | lm loss: 1.011342E+01 | loss scale: 2048.0 | actual seqlen:  1024 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 104.971 | tokens per gpu per second (tgs): 107489.986 | TFLOPs: 85.64 |
+(min, max) time across ranks (ms):
+    forward-backward ...............................: (284.99, 284.99)
+    optimizer ......................................: (11.43, 11.43)
+[2024-04-11 03:25:29,977] [INFO] [logging.py:96:log_dist] [Rank 0] step=6, skipped=0, lr=[6e-05, 6e-05], mom=[(0.9, 0.95), (0.9, 0.95)]
+[2024-04-11 03:25:29,978] [INFO] [timer.py:260:stop] epoch=0/micro_step=6/global_step=6, RunningAvgSamplesPerSec=2216.438146971352, CurrSamplesPerSec=3218.1296312946947, MemAllocated=1.87GB, MaxMemAllocated=13.71GB
+ iteration        6/   14980 | consumed samples:          192 | consumed tokens:       196608 | elapsed time per iteration (ms): 295.6 | learning rate: 6.000E-05 | global batch size:    32 | lm loss: 1.003058E+01 | loss scale: 2048.0 | actual seqlen:  1024 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 108.259 | tokens per gpu per second (tgs): 110857.713 | TFLOPs: 88.32 |
+(min, max) time across ranks (ms):
+    forward-backward ...............................: (276.99, 276.99)
+    optimizer ......................................: (10.91, 10.91)
+[2024-04-11 03:25:30,270] [INFO] [logging.py:96:log_dist] [Rank 0] step=7, skipped=0, lr=[6e-05, 6e-05], mom=[(0.9, 0.95), (0.9, 0.95)]
+[2024-04-11 03:25:30,272] [INFO] [timer.py:260:stop] epoch=0/micro_step=7/global_step=7, RunningAvgSamplesPerSec=2366.1499785805327, CurrSamplesPerSec=3242.1209414677596, MemAllocated=1.87GB, MaxMemAllocated=13.71GB
+ iteration        7/   14980 | consumed samples:          224 | consumed tokens:       229376 | elapsed time per iteration (ms): 293.7 | learning rate: 6.000E-05 | global batch size:    32 | lm loss: 9.942419E+00 | loss scale: 2048.0 | actual seqlen:  1024 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 108.954 | tokens per gpu per second (tgs): 111568.550 | TFLOPs: 88.89 |
+(min, max) time across ranks (ms):
+    forward-backward ...............................: (275.56, 275.56)
+    optimizer ......................................: (10.66, 10.66)
+[2024-04-11 03:25:30,563] [INFO] [logging.py:96:log_dist] [Rank 0] step=8, skipped=0, lr=[6e-05, 6e-05], mom=[(0.9, 0.95), (0.9, 0.95)]
+[2024-04-11 03:25:30,564] [INFO] [timer.py:260:stop] epoch=0/micro_step=8/global_step=8, RunningAvgSamplesPerSec=2481.336756069933, CurrSamplesPerSec=3279.6124117666823, MemAllocated=1.87GB, MaxMemAllocated=13.71GB
+ iteration        8/   14980 | consumed samples:          256 | consumed tokens:       262144 | elapsed time per iteration (ms): 292.2 | learning rate: 6.000E-05 | global batch size:    32 | lm loss: 9.921495E+00 | loss scale: 2048.0 | actual seqlen:  1024 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 109.525 | tokens per gpu per second (tgs): 112154.048 | TFLOPs: 89.35 |
+(min, max) time across ranks (ms):
+    forward-backward ...............................: (274.46, 274.46)
+    optimizer ......................................: (10.39, 10.39)
+[2024-04-11 03:25:30,855] [INFO] [logging.py:96:log_dist] [Rank 0] step=9, skipped=0, lr=[6e-05, 6e-05], mom=[(0.9, 0.95), (0.9, 0.95)]
+[2024-04-11 03:25:30,856] [INFO] [timer.py:260:stop] epoch=0/micro_step=9/global_step=9, RunningAvgSamplesPerSec=2567.392413953058, CurrSamplesPerSec=3242.013261029723, MemAllocated=1.87GB, MaxMemAllocated=13.71GB
+ iteration        9/   14980 | consumed samples:          288 | consumed tokens:       294912 | elapsed time per iteration (ms): 291.6 | learning rate: 6.000E-05 | global batch size:    32 | lm loss: 9.961199E+00 | loss scale: 2048.0 | actual seqlen:  1024 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 109.738 | tokens per gpu per second (tgs): 112371.740 | TFLOPs: 89.53 |
+(min, max) time across ranks (ms):
+    forward-backward ...............................: (273.72, 273.72)
+    optimizer ......................................: (10.67, 10.67)
+[2024-04-11 03:25:31,147] [INFO] [logging.py:96:log_dist] [Rank 0] step=10, skipped=0, lr=[6e-05, 6e-05], mom=[(0.9, 0.95), (0.9, 0.95)]
+[2024-04-11 03:25:31,148] [INFO] [timer.py:260:stop] epoch=0/micro_step=10/global_step=10, RunningAvgSamplesPerSec=2635.9866757377213, CurrSamplesPerSec=3242.385278326358, MemAllocated=1.87GB, MaxMemAllocated=13.71GB
+ iteration       10/   14980 | consumed samples:          320 | consumed tokens:       327680 | elapsed time per iteration (ms): 292.6 | learning rate: 6.000E-05 | global batch size:    32 | lm loss: 9.859510E+00 | loss scale: 2048.0 | actual seqlen:  1024 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 109.347 | tokens per gpu per second (tgs): 111971.760 | TFLOPs: 89.21 |
+(min, max) time across ranks (ms):
+    forward-backward ...............................: (274.77, 274.77)
+    optimizer ......................................: (10.63, 10.63)
+[after training is done] datetime: 2024-04-11 03:25:31 
+Evaluating iter 1/10
+Evaluating iter 2/10
+Evaluating iter 3/10
+Evaluating iter 4/10
+Evaluating iter 5/10
+Evaluating iter 6/10
+Evaluating iter 7/10
+Evaluating iter 8/10
+Evaluating iter 9/10
+Evaluating iter 10/10
+--------------------------------------------------------------------------------------------------------------------------------------
+ validation loss at iteration 10 on 2560-sample draw from validation set | lm loss value: 9.802173E+00 | lm loss PPL: 1.807297E+04 | 
+--------------------------------------------------------------------------------------------------------------------------------------
+[2024-04-11 03:25:36,832] [INFO] [launch.py:348:main] Process 14869 exits successfully.
