@@ -1,0 +1,46 @@
+FROM nvcr.io/nvidia/pytorch:24.02-py3
+
+ENV DEBIAN_FRONTEND noninteractive
+
+##############################################################################
+# Temporary Installation Directory
+##############################################################################
+ENV STAGE_DIR=/tmp
+RUN mkdir -p ${STAGE_DIR}
+
+##############################################################################
+# Pip
+##############################################################################
+RUN pip install --no-cache-dir \
+    "pytest-cov" \
+    "pytest_mock" \
+    "nltk" \
+    "wrapt" \
+    "zarr" \
+    "tensorstore==0.1.45" \
+    "black==19.10b0" \
+    "isort" \
+    "click==8.0.2"
+
+##############################################################################
+# Triton
+##############################################################################
+RUN git clone https://github.com/openai/triton.git ${STAGE_DIR}/triton
+RUN cd ${STAGE_DIR}/triton/python/
+RUN pip install ninja cmake wheel
+RUN pip install -e ${STAGE_DIR}/triton/python/
+
+##############################################################################
+# Huggingface transformers
+##############################################################################
+#RUN pip install transformers
+# install from source
+RUN pip install git+https://github.com/huggingface/transformers
+# requirements from transformers/examples/pytorch/translation/requirements.txt
+RUN pip install accelerate \
+                datasets \
+                protobuf \
+                sacrebleu \
+                py7zr \
+                evaluate \
+                nltk
