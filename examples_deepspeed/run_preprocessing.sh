@@ -3,7 +3,7 @@ corpus_f="${dataset_dir}/oscar-1GB.jsonl"
 vocab_f="${dataset_dir}/gpt2-vocab.json"
 merge_f="${dataset_dir}/gpt2-merges.txt"
 output_prefix="oscar-gpt2"
-n_workers=32
+n_workers=64
 
 #export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
 
