@@ -1,7 +1,7 @@
-# docker build -t megatron-lm -f ./Dockerfile_lm .
+# docker build -t megatron-core -f ./Dockerfile_mcore .
 # docker system prune --volumes
 
-docker_img="megatron-lm:latest"
+docker_img="megatron-core:latest"
 
 home_dir_0="${HOME}/Megatron-DeepSpeed-TT"
 docker_dir_0="/workspace/Megatron-DeepSpeed"

@@ -3,13 +3,13 @@ FROM nvcr.io/nvidia/pytorch:24.03-py3
 ENV DEBIAN_FRONTEND noninteractive
 
 ##############################################################################
-# Temporary Installation Directory
-##############################################################################
-ENV STAGE_DIR=/tmp
-RUN mkdir -p ${STAGE_DIR}
-
-##############################################################################
 # Pip
 ##############################################################################
 RUN pip install tensorstore \
                 zarr
+
+RUN pip install tqdm \
+                numpy \
+                tiktoken
+
+RUN pip install git+https://github.com/huggingface/transformers
