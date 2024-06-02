@@ -4,7 +4,7 @@ DIR=`pwd`
 
 ###############################################################################
 ### GPT Models Configs
-NUM_LAYERS=2
+NUM_LAYERS=4
 HIDDEN_SIZE=768
 NUM_ATTN_HEADS=12
 
@@ -25,10 +25,10 @@ GLOBAL_BATCH_SIZE=$(( ${NUM_GPUS} * ${BATCH_SIZE} ))
 GLOBAL_BATCH_SIZE=128
 
 ## Tensor parallelism: 1 means no TP
-TP_SIZE=1
+TP_SIZE=2
 
 ## Pipeline parallelism: 1 means no PP
-PP_SIZE=4
+PP_SIZE=2
 
 ## Experts parallelism: MoE only, 1 means no EP
 if [ $EP_SIZE -gt $NUM_GPUS ]; then
@@ -106,6 +106,7 @@ megatron_options=" \
         --adam-beta1 0.9 \
         --adam-beta2 0.95 \
         --tensor-model-parallel-size ${TP_SIZE} \
+        --pipeline-model-parallel-size ${PP_SIZE} \
         --moe-expert-parallel-size ${EP_PARALLEL_SIZE} \
         --num-experts ${EP_SIZE} \
         --init-method-std ${INIT_STD} \
@@ -136,6 +137,12 @@ megatron_options=" \
         --num-workers 0 \
         --fp16"
 
+if [ $EP_SIZE -gt 1 ]; then
+        megatron_options="${megatron_options} \
+        --no-pipeline-parallel \
+        --create-moe-param-group"
+fi
+
 if [ "${PROF}" = "true" ];
 then
         megatron_options="${megatron_options} \
@@ -156,10 +163,7 @@ then
         --checkpoint-activations"
 fi
 
-if [ $EP_SIZE -gt 1 ]; then
-        megatron_options="${megatron_options} \
-        --create-moe-param-group"
-fi
+
 
 
 
@@ -193,17 +197,11 @@ sed "s/CONFIG_BATCH_SIZE/${GLOBAL_BATCH_SIZE}/" ${template_json} \
 
 deepspeed_options=" \
         --deepspeed \
-	--deepspeed_config ${config_json} \
-	--pipeline-model-parallel-size ${PP_SIZE}"
+	--deepspeed_config ${config_json}"
 
 if [ "${OFFLOAD}" = "true" ]; then
         deepspeed_options="${deepspeed_options} \
         --cpu-optimizer"
-fi
-
-if [ $EP_SIZE -gt 1 ]; then
-        deepspeed_options="${deepspeed_options} \
-        --no-pipeline-parallel"
 fi
 
 if [ "${ACTIVATION_CHECKPOINT}" = "true" ]; then
@@ -211,7 +209,7 @@ if [ "${ACTIVATION_CHECKPOINT}" = "true" ]; then
         --deepspeed-activation-checkpointing"
 fi
 
-run_cmd="deepspeed pretrain_gpt.py ${megatron_options} ${data_options} ${deepspeed_options} > ${OUTPUT_BASEPATH}/${NAME}.log"
+run_cmd="deepspeed pretrain_gpt.py ${data_options} ${megatron_options} ${deepspeed_options} > ${OUTPUT_BASEPATH}/${NAME}.log"
 echo ${run_cmd}
 eval ${run_cmd}
 set +x
