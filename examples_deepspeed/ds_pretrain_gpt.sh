@@ -1,10 +1,11 @@
 #!/bin/bash
 DIR=`pwd`
-
+parallelism=$1
 
 ###############################################################################
-### GPT Models Configs
-NUM_LAYERS=4
+### GPT-125M
+MODEL_SIZE="125M"
+NUM_LAYERS=12
 HIDDEN_SIZE=768
 NUM_ATTN_HEADS=12
 
@@ -13,22 +14,57 @@ EP_SIZE=1
 
 ###############################################################################
 ### Parallelism configs
-## Make sure that BATCH_SIZE <= GLOBAL_BATCH_SIZE*PP_SIZE*TP_SIZE/NUM_GPUS
 
+## NUM_GPUS = DP x TP x PP
 NUM_GPUS=4
 
-## Micro batch size per GPU
-BATCH_SIZE=8
+## Data parallelism (DP)
+## Tensor parallelism (TP): 1 means no TP
+## Pipeline parallelism (PP): 1 means no PP
 
-# Data parallelism
-GLOBAL_BATCH_SIZE=$(( ${NUM_GPUS} * ${BATCH_SIZE} ))
-GLOBAL_BATCH_SIZE=128
+## BATCH_SIZE: batch size per GPU
+## GLOBAL_BATCH_SIZE
 
-## Tensor parallelism: 1 means no TP
-TP_SIZE=2
-
-## Pipeline parallelism: 1 means no PP
-PP_SIZE=2
+if [ "${parallelism}" = 1 ]; then
+        DP_SIZE=4
+        TP_SIZE=1
+        PP_SIZE=1
+        BATCH_SIZE=4
+        GLOBAL_BATCH_SIZE=256
+elif [ "${parallelism}" = 2 ]; then
+        DP_SIZE=1
+        TP_SIZE=4
+        PP_SIZE=1
+        BATCH_SIZE=4
+        GLOBAL_BATCH_SIZE=256
+elif [ "${parallelism}" = 3 ]; then
+        DP_SIZE=1
+        TP_SIZE=1
+        PP_SIZE=4
+        BATCH_SIZE=4
+        GLOBAL_BATCH_SIZE=256
+elif [ "${parallelism}" = 4 ]; then
+        DP_SIZE=1
+        TP_SIZE=2
+        PP_SIZE=2
+        BATCH_SIZE=4
+        GLOBAL_BATCH_SIZE=256
+elif [ "${parallelism}" = 5 ]; then
+        DP_SIZE=2
+        TP_SIZE=1
+        PP_SIZE=2
+        BATCH_SIZE=4
+        GLOBAL_BATCH_SIZE=256
+elif [ "${parallelism}" = 6 ]; then
+        DP_SIZE=2
+        TP_SIZE=2
+        PP_SIZE=1
+        BATCH_SIZE=4
+        GLOBAL_BATCH_SIZE=256
+else
+        echo "No such parallelism"
+        exit
+fi
 
 ## Experts parallelism: MoE only, 1 means no EP
 if [ $EP_SIZE -gt $NUM_GPUS ]; then
@@ -73,12 +109,11 @@ ACTIVATION_CHECKPOINT="false"
 
 ###############################################################################
 ### Output, prof and data configs
-
-NAME="gpt-bs-${GLOBAL_BATCH_SIZE}-gpus-${NUM_GPUS}-tp-${TP_SIZE}-pp-${PP_SIZE}"
+NAME="gpt-${MODEL_SIZE}-bs-${BATCH_SIZE}-dp-${DP_SIZE}-tp-${TP_SIZE}-pp-${PP_SIZE}"
 
 
 # clean old logs
-OUTPUT_BASEPATH=$DIR/output
+OUTPUT_BASEPATH=$DIR/output/$NAME
 rm -fr ${OUTPUT_BASEPATH}
 
 # prof path
@@ -113,9 +148,9 @@ megatron_options=" \
         --lr-decay-tokens ${LR_DECAY_TOKENS} \
         --lr-warmup-tokens ${WARMUP_TOKENS} \
         --micro-batch-size ${BATCH_SIZE} \
-        --exit-duration-in-mins ${EXIT_DURATION} \
-        --rampup-batch-size 32 32 1953125 \
         --global-batch-size ${GLOBAL_BATCH_SIZE} \
+        --rampup-batch-size 32 32 1953125 \
+        --exit-duration-in-mins ${EXIT_DURATION} \
         --num-layers ${NUM_LAYERS} \
         --hidden-size ${HIDDEN_SIZE} \
         --num-attention-heads ${NUM_ATTN_HEADS} \
@@ -136,6 +171,8 @@ megatron_options=" \
         --hysteresis 2 \
         --num-workers 0 \
         --fp16"
+
+# 
 
 if [ $EP_SIZE -gt 1 ]; then
         megatron_options="${megatron_options} \
@@ -162,8 +199,6 @@ then
         megatron_options="${megatron_options} \
         --checkpoint-activations"
 fi
-
-
 
 
 
